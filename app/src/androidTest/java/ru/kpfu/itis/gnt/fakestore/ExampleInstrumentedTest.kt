@@ -1,4 +1,4 @@
-package ru.kpfu.itis.hw_android_2022
+package ru.kpfu.itis.gnt.fakestore
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("ru.kpfu.itis.hw_android_2022", appContext.packageName)
+        assertEquals("ru.kpfu.itis.gnt.fakestore", appContext.packageName)
     }
 }

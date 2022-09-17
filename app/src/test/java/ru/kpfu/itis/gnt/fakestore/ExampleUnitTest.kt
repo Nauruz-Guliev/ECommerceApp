@@ -1,4 +1,4 @@
-package ru.kpfu.itis.hw_android_2022
+package ru.kpfu.itis.gnt.fakestore
 
 import org.junit.Test
 
