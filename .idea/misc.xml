@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/drawable/button_selector_with_shadow.xml" value="0.181" />
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/font/fonts.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/epoxy_product_item.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/epoxy_product_item.xml" value="0.4" />
         <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/epoxy_product_item_shimmer.xml" value="0.1" />
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/shimmer.xml" value="0.24895833333333334" />
       </map>
     </option>
   </component>

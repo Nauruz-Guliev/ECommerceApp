@@ -18,21 +18,19 @@ data class ProductEpoxyModel(
     private val currencyFormatter = NumberFormat.getCurrencyInstance()
 
     override fun EpoxyProductItemBinding.bind() {
-        shimmerLayout.isVisible = product == null
+        //shimmerLayout.isVisible = product == null
         cardView.isInvisible = product == null
 
         product?.let {
-            shimmerLayout.stopShimmer()
+            //shimmerLayout.stopShimmer()
 
             tvProductTitle.text = product.title
-            tvProductDescription.text = product.description
             tvProductCategory.text = product.category
 
             // to show products in dollars instead of rubels
             currencyFormatter.currency = Currency.getInstance("USD")
 
             tvProductPrice.text = currencyFormatter.format(product.price)
-            tvProductDescription.isVisible = false
 
             contentLoadingProgressBar.isVisible = true
             ivProduct.load(
@@ -42,23 +40,16 @@ data class ProductEpoxyModel(
                     contentLoadingProgressBar.isGone = true
                 }
             }
-        } ?: shimmerLayout.startShimmer()
+        } ?: //shimmerLayout.startShimmer()
 
         setOnClickListeners(this)
     }
 
     fun setOnClickListeners(binding: EpoxyProductItemBinding) {
         with(binding) {
-            cardView.setOnClickListener {
-                tvProductDescription.apply {
-                    isVisible = !isVisible
-                }
-            }
 
             btnAddToCart.setOnClickListener {
-                btnInCart.apply {
-                    isVisible = !isVisible
-                }
+
             }
             var isFavorite = false
             ivFavorite.setOnClickListener {

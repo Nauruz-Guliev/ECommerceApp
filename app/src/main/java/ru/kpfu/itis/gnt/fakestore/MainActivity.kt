@@ -1,26 +1,27 @@
 package ru.kpfu.itis.gnt.fakestore
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import fakestore.databinding.ActivityMainBinding
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import ru.kpfu.itis.gnt.fakestore.epoxy.ProductEpoxyController
-import ru.kpfu.itis.gnt.fakestore.hilt.service.ProductsService
 import ru.kpfu.itis.gnt.fakestore.model.domain.Product
-import ru.kpfu.itis.gnt.fakestore.model.mapper.ProductMapper
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var productsService: ProductsService
-
-    @Inject
-    lateinit var productMapper: ProductMapper
-
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: MainActivityViewModel by lazy {
+        ViewModelProvider(this)[MainActivityViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,16 +29,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val controller = ProductEpoxyController()
+        val spanCount = 2
+        val layoutManager = GridLayoutManager(this, spanCount)
+        controller.spanCount = spanCount
+        layoutManager.spanSizeLookup = controller.spanSizeLookup
+        binding.rvRepoxy.layoutManager = layoutManager
         binding.rvRepoxy.setController(controller)
         controller.setData(emptyList())
 
-        lifecycleScope.launchWhenStarted {
-            val response = productsService.getAllProducts()
-            val domainProducts: List<Product> = response.body()!!.map {
-                productMapper.buildFrom(networkProduct = it)
-            }
-            controller.setData(domainProducts)
+        viewModel.store.stateFlow.map {
+            it.products
+        }.distinctUntilChanged().asLiveData().observe(this) {
+            controller.setData(it)
         }
+
+
+        viewModel.refreshProducts()
     }
 
 }
