@@ -1,50 +1,44 @@
 package ru.kpfu.itis.gnt.fakestore
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import fakestore.R
 import fakestore.databinding.ActivityMainBinding
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import ru.kpfu.itis.gnt.fakestore.epoxy.ProductEpoxyController
-import ru.kpfu.itis.gnt.fakestore.model.domain.Product
+import ru.kpfu.itis.gnt.fakestore.epoxy.UiProductEpoxyController
+import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: MainActivityViewModel by lazy {
-        ViewModelProvider(this)[MainActivityViewModel::class.java]
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val controller = ProductEpoxyController()
-        val spanCount = 2
-        val layoutManager = GridLayoutManager(this, spanCount)
-        controller.spanCount = spanCount
-        layoutManager.spanSizeLookup = controller.spanSizeLookup
-        binding.rvRepoxy.layoutManager = layoutManager
-        binding.rvRepoxy.setController(controller)
-        controller.setData(emptyList())
+        val appBarConfiguration = AppBarConfiguration(
+            topLevelDestinationIds = setOf(
+                R.id.productsListFragment,
+                R.id.profileFragment
+            )
+        )
+        val navHostFragment = supportFragmentManager.findFragmentById(androidx.navigation.fragment.R.id.nav_host_fragment_container) as NavHostFragment
+        val navController = navHostFragment.navController
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        viewModel.store.stateFlow.map {
-            it.products
-        }.distinctUntilChanged().asLiveData().observe(this) {
-            controller.setData(it)
-        }
-
-
-        viewModel.refreshProducts()
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
     }
 
 }

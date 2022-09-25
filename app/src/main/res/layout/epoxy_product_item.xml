@@ -67,13 +67,14 @@
                 app:cardCornerRadius="400dp"
                 app:cardElevation="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_title">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_addToCart"
                     style="@style/Widget.Material3.Button.Icon"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
                     android:layout_marginStart="-2dp"
                     android:layout_marginTop="-6dp"
                     android:elevation="40dp"
@@ -111,14 +112,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="36dp"
                 android:layout_marginBottom="24dp"
                 android:text="500$"
                 android:textColor="#333A34"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_title" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
@@ -152,7 +153,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
 
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -235,7 +235,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_addToCart_shimmer"
-                            android:layout_width="64dp"
+                            android:layout_width="66dp"
                             android:background="@color/green_700"
                             android:layout_height="64dp"
                             android:layout_marginStart="-2dp"
@@ -317,7 +317,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,10 +5,15 @@
       <map>
         <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/drawable/button_selector_with_shadow.xml" value="0.181" />
         <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/font/fonts.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/activity_main.xml" value="0.10674157303370786" />
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/epoxy_model_product_filter.xml" value="0.536" />
         <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/epoxy_product_item.xml" value="0.4" />
         <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/epoxy_product_item_shimmer.xml" value="0.1" />
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/fragment_product_information.xml" value="0.2" />
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/fragment_products_list.xml" value="0.1" />
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/layout/shimmer.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/nauru/AndroidStudioProjects/home works/summer_practice/FakeStore/app/src/main/res/menu/menu_bottom_nav.xml" value="0.1" />
       </map>
     </option>
   </component>
