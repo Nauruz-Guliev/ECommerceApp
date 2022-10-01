@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import coil.load
 import fakestore.R
@@ -15,10 +16,12 @@ import java.text.NumberFormat
 import java.util.*
 
 data class UiProductEpoxyModel(
+    val fragment: Fragment,
     val uiProduct: UiProduct?,
     val navController: NavController,
     val onFavouriteIconClicked: (Int) -> Unit,
-    val onProductClicked: (NavController, UiProduct) -> Unit
+    val onProductClicked: (NavController, UiProduct, Fragment) -> Unit,
+    val onAddToCartClicked: (Int) -> Unit
 ) : ViewBindingKotlinModel<EpoxyProductItemBinding>(R.layout.epoxy_product_item) {
 
     private val currencyFormatter = NumberFormat.getCurrencyInstance()
@@ -49,9 +52,11 @@ data class UiProductEpoxyModel(
             }
 
             root.setOnClickListener {
-                onProductClicked(navController, uiProduct)
+                onProductClicked(navController, uiProduct, fragment)
             }
-
+            btnAddToCart.setOnClickListener {
+                onAddToCartClicked(uiProduct.product.id)
+            }
             contentLoadingProgressBar.isVisible = true
             ivProduct.load(
                 data = uiProduct.product.image
@@ -61,27 +66,6 @@ data class UiProductEpoxyModel(
                 }
             }
         } ?: shimmerLayout.startShimmer()
-
-        setOnClickListeners(this)
-    }
-
-    fun setOnClickListeners(binding: EpoxyProductItemBinding) {
-        with(binding) {
-
-            btnAddToCart.setOnClickListener {
-
-            }
-            var isFavorite = false
-            ivFavorite.setOnClickListener {
-                val imageRes = if (isFavorite) {
-                    R.drawable.ic_baseline_favorite_border_24
-                } else {
-                    R.drawable.ic_baseline_favorite_24
-                }
-                ivFavorite.setIconResource(imageRes)
-                isFavorite = !isFavorite
-            }
-        }
     }
 }
 

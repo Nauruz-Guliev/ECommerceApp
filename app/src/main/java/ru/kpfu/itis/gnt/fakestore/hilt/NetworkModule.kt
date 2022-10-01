@@ -1,6 +1,8 @@
 package ru.kpfu.itis.gnt.fakestore.hilt
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,10 +34,11 @@ object NetworkModule {
         return retrofit.create(ProductsService::class.java)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Provides
     @Singleton
     fun providesOkHttpClient() : OkHttpClient {
-        val duration = Duration.ofSeconds(20)
+        val duration = Duration.ofSeconds(200)
         return OkHttpClient.Builder()
             .connectTimeout(duration)
             .readTimeout(duration)

@@ -3,6 +3,7 @@ package ru.kpfu.itis.gnt.fakestore
 import android.content.Context
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import fakestore.R
 import fakestore.databinding.EpoxyModelProductFilterBinding
@@ -15,7 +16,8 @@ import kotlin.reflect.KFunction1
 data class UiProductFilterEpoxyModel(
     val uiFilter: UiFilter,
     val onFilterSelected: (Filter) -> Unit,
-    val onProductClicked: (NavController, UiProduct) -> Unit
+    val onProductClicked: (NavController, UiProduct, Fragment) -> Unit,
+    val onAddToCartClicked: (Int) -> Unit
  ) : ViewBindingKotlinModel<EpoxyModelProductFilterBinding>(R.layout.epoxy_model_product_filter) {
 
     override fun EpoxyModelProductFilterBinding.bind() {

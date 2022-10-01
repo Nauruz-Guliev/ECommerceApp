@@ -2,7 +2,7 @@ package ru.kpfu.itis.gnt.fakestore.model.domain
 
 import java.math.BigDecimal
 
-data class Product(
+class Product(
     val category: String,
     val description: String,
     val id: Int,
