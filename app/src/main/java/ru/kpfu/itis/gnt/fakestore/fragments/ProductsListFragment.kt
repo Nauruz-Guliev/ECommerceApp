@@ -1,6 +1,5 @@
 package ru.kpfu.itis.gnt.fakestore.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +14,10 @@ import fakestore.databinding.FragmentProductsListBinding
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import ru.kpfu.itis.gnt.fakestore.ProductsListFragmentUiState
+import ru.kpfu.itis.gnt.fakestore.ProductListFragmentUiStateGenerator
 import ru.kpfu.itis.gnt.fakestore.ProductsListViewModel
-import ru.kpfu.itis.gnt.fakestore.SharedPreferencesStorage
 import ru.kpfu.itis.gnt.fakestore.epoxy.UiProductEpoxyController
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiFilter
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProductsListFragment : Fragment() {
@@ -28,6 +25,9 @@ class ProductsListFragment : Fragment() {
     private val binding by lazy { _binding!! }
 
     private val viewModel: ProductsListViewModel by viewModels()
+
+    @Inject
+    lateinit var uiStateGenerator: ProductListFragmentUiStateGenerator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,9 +40,8 @@ class ProductsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)
         val navController = findNavController()
-        val controller = UiProductEpoxyController(this, viewModel, navController = navController, sharedPreferences = sharedPreferences, binding.root.context)
+        val controller = UiProductEpoxyController(this, viewModel, navController = navController)
 
 
         val spanCount = 2
@@ -53,55 +52,15 @@ class ProductsListFragment : Fragment() {
         binding.rvRepoxy.setController(controller)
 
         combine(
-            viewModel.store.stateFlow.map {
-                it.products
-            },
-            viewModel.store.stateFlow.map {
-                it.favouriteProductIDs
-            },
-            viewModel.store.stateFlow.map {
-                it.productFilterInfo
-            },
-            viewModel.store.stateFlow.map {
-                it.inCartProductIDs
-            }
-        ) { listOfProducts, setOfFavoriteIds, productFilterInfo, inCartProductIDs ->
-
-            if (listOfProducts.isEmpty()) {
-                return@combine ProductsListFragmentUiState.Loading
-            }
-            val uiProducts = listOfProducts.map { product ->
-                UiProduct(
-                    product = product,
-                    isFavorite = SharedPreferencesStorage.getSetIdsFromSharedPreferences(
-                        binding.root.context,
-                        sharedPreferences!!
-                    ).contains(product.id),
-                    isInCart = inCartProductIDs.contains(product.id)
-                )
-            }
-            val uiFilters = productFilterInfo.filters.map { filter ->
-                UiFilter(
-                    filter = filter,
-                    isSelected = productFilterInfo.selectedFilter?.equals(filter) == true
-                )
-            }.toSet()
-
-            val filterProducts = if (productFilterInfo.selectedFilter == null) {
-                uiProducts
-            } else {
-                uiProducts.filter { it.product.category == productFilterInfo.selectedFilter.value }
-            }
-
-            return@combine ProductsListFragmentUiState.Success(uiFilters, filterProducts)
-
-
+            viewModel.uiProductListReducer.reduce(viewModel.store),
+            viewModel.store.stateFlow.map { it.productFilterInfo }
+        ) { uiProducts, productFilterInfo ->
+            uiStateGenerator.generate(uiProducts, productFilterInfo)
         }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner)
         {
             controller.setData(it)
         }
-
-        viewModel.refreshProducts(false, binding.root.context, sharedPreferences!!)
+        viewModel.refreshProducts()
     }
 
     override fun onDestroy() {

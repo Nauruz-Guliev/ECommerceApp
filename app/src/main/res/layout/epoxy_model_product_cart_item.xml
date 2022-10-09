@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:elevation="8dp"
+        android:maxHeight="240dp"
+        android:minHeight="100dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_product"
+                android:layout_width="104dp"
+                android:layout_height="104dp"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_product_category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_product_cost"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/tv_product_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_product"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="500$" />
+
+            <TextView
+                android:id="@+id/tv_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:maxLength="32"
+                android:maxLines="1"
+                app:layout_constraintStart_toEndOf="@+id/iv_product"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_cost"
+                tools:text="Name of Product" />
+
+            <TextView
+                android:id="@+id/tv_product_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:maxLength="32"
+                android:maxLines="1"
+                app:layout_constraintStart_toEndOf="@+id/iv_product"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
+                tools:text="Category" />
+
+
+            <View
+                android:id="@+id/divider_line"
+                android:layout_width="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@color/green_700"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_product" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/iv_favorite"
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_margin="8dp"
+                android:insetTop="-8dp"
+                android:insetBottom="-8dp"
+                android:text="Add to favorites"
+                android:textSize="12sp"
+                app:icon="@drawable/ic_baseline_favorite_border_24"
+                app:iconGravity="textStart"
+                app:iconSize="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_line"
+                app:strokeColor="@color/black"
+                app:strokeWidth="0.5dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delete_from_cart"
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/red"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:textSize="12sp"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/ic_baseline_delete_24"
+                app:iconGravity="textEnd"
+                app:iconSize="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_favorite"
+                app:layout_constraintTop_toBottomOf="@+id/divider_line"
+                app:strokeColor="@color/black"
+                app:strokeWidth="0.5dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

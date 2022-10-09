@@ -1,6 +1,5 @@
 package ru.kpfu.itis.gnt.fakestore.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +16,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import ru.kpfu.itis.gnt.fakestore.ProductsListFragmentUiState
 import ru.kpfu.itis.gnt.fakestore.ProductsListViewModel
-import ru.kpfu.itis.gnt.fakestore.SharedPreferencesStorage
 import ru.kpfu.itis.gnt.fakestore.epoxy.UiProductEpoxyController
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiFilter
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
 
 @AndroidEntryPoint
 class FavoritesListFragment : Fragment() {
@@ -42,44 +39,26 @@ class FavoritesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)
         val navController = findNavController()
         val controller = UiProductEpoxyController(
             this,
             viewModel,
             navController = navController,
-            sharedPreferences = sharedPreferences,
-            binding.root.context
         )
 
-
-        val spanCount = 2
-        val layoutManager = GridLayoutManager(context, spanCount)
-        controller.spanCount = spanCount
-        layoutManager.spanSizeLookup = controller.spanSizeLookup
-        binding.rvRepoxy.layoutManager = layoutManager
         binding.rvRepoxy.setController(controller)
         controller.setData(ProductsListFragmentUiState.Loading)
         combine(
-            viewModel.store.stateFlow.map {
-                it.products
+            viewModel.uiProductListReducer.reduce(viewModel.store).map {
+                it.filter {
+                    it.isFavorite
+                }
             },
-            viewModel.store.stateFlow.map {
-                it.favouriteProductIDs
-            },
-            viewModel.store.stateFlow.map {
-                it.productFilterInfo
-            }
-        ) { listOfProducts, setOfFavoriteIds, productFilterInfo ->
-            val favoriteIdsFromSP = SharedPreferencesStorage.getSetIdsFromSharedPreferences(
-                binding.root.context,
-                sharedPreferences!!
-            )
-            val uiProducts = listOfProducts.map { product ->
-                UiProduct(
-                    product = product,
-                    isFavorite = favoriteIdsFromSP.contains(product.id),
-                )
+            viewModel.store.stateFlow.map { it.productFilterInfo }
+        ) { uiProducts, productFilterInfo ->
+
+            if (uiProducts.isEmpty()) {
+                return@combine ProductsListFragmentUiState.Loading
             }
 
             val uiFilters = productFilterInfo.filters.map { filter ->
@@ -89,28 +68,19 @@ class FavoritesListFragment : Fragment() {
                 )
             }.toSet()
 
-            val filterProducts = if (productFilterInfo.selectedFilter == null) {
+            val filteredProducts = if (productFilterInfo.selectedFilter == null) {
                 uiProducts
             } else {
                 uiProducts.filter { it.product.category == productFilterInfo.selectedFilter.value }
             }
 
-            val filteredFavoriteProducts = if (setOfFavoriteIds.equals(favoriteIdsFromSP)) {
-                filterProducts.filter {
-                    setOfFavoriteIds.contains(it.product.id)
-                }
-            } else {
-                filterProducts
-            }
-
-            return@combine ProductsListFragmentUiState.Success(uiFilters, filteredFavoriteProducts)
-
-
+            return@combine ProductsListFragmentUiState.Success(uiFilters, filteredProducts)
         }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner)
         {
             controller.setData(it)
         }
-        viewModel.refreshProducts(true, binding.root.context, sharedPreferences!!)
+        viewModel.refreshProducts()
+
     }
 
 

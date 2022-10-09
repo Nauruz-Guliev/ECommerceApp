@@ -27,11 +27,11 @@ data class UiProductEpoxyModel(
     private val currencyFormatter = NumberFormat.getCurrencyInstance()
 
     override fun EpoxyProductItemBinding.bind() {
-        shimmerLayout.isVisible = uiProduct == null
+        shimmerIncluder.shimmerLayout.isVisible = uiProduct == null
         cardView.isInvisible = uiProduct == null
 
         uiProduct?.let {
-            shimmerLayout.stopShimmer()
+            shimmerIncluder.shimmerLayout.stopShimmer()
 
             tvProductTitle.text = uiProduct.product.title
             tvProductCategory.text = uiProduct.product.category
@@ -65,7 +65,7 @@ data class UiProductEpoxyModel(
                     contentLoadingProgressBar.isGone = true
                 }
             }
-        } ?: shimmerLayout.startShimmer()
+        } ?: shimmerIncluder.shimmerLayout.startShimmer()
     }
 }
 

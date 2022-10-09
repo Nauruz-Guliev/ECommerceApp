@@ -1,5 +1,6 @@
 package ru.kpfu.itis.gnt.fakestore.model.domain
 
+import java.io.Serializable
 import java.math.BigDecimal
 
 class Product(
@@ -9,4 +10,4 @@ class Product(
     val image: String,
     val price: BigDecimal,
     val title: String
-)
+) : Serializable

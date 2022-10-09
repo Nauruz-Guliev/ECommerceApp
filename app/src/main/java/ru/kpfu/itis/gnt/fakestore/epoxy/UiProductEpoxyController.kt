@@ -1,7 +1,5 @@
 package ru.kpfu.itis.gnt.fakestore.epoxy
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -11,8 +9,6 @@ import fakestore.R
 import kotlinx.coroutines.launch
 import ru.kpfu.itis.gnt.fakestore.ProductsListFragmentUiState
 import ru.kpfu.itis.gnt.fakestore.ProductsListViewModel
-import ru.kpfu.itis.gnt.fakestore.SharedPreferencesStorage.Companion.getSetIdsFromSharedPreferences
-import ru.kpfu.itis.gnt.fakestore.SharedPreferencesStorage.Companion.saveSetIdsToSharedPreferences
 import ru.kpfu.itis.gnt.fakestore.UiProductFilterEpoxyModel
 import ru.kpfu.itis.gnt.fakestore.fragments.ProductInformationFragment
 import ru.kpfu.itis.gnt.fakestore.fragments.ProductsListFragment
@@ -24,8 +20,7 @@ class UiProductEpoxyController(
     private val fragment: Fragment,
     private val viewModel: ProductsListViewModel,
     private val navController: NavController,
-    private val sharedPreferences: SharedPreferences?,
-    private val context: Context
+
 ) : TypedEpoxyController<ProductsListFragmentUiState>() {
     override fun buildModels(data: ProductsListFragmentUiState?) {
 
@@ -76,24 +71,9 @@ class UiProductEpoxyController(
     private fun onFavouriteIconClicked(selectedProductId: Int) {
         viewModel.viewModelScope.launch {
             viewModel.store.update { currentState ->
-                val currentFavouriteIDs = currentState.favouriteProductIDs
-                val newFavoriteIDs =
-                    if (currentFavouriteIDs.contains(selectedProductId) && getSetIdsFromSharedPreferences(
-                            context,
-                            sharedPreferences!!
-                        ).contains(selectedProductId)
-                    ) {
-                        currentFavouriteIDs.filter {
-                            it != selectedProductId
-                        }.toSet()
-                    } else {
-                        currentFavouriteIDs + setOf(selectedProductId) + getSetIdsFromSharedPreferences(
-                            context,
-                            sharedPreferences!!
-                        )
-                    }
-                saveSetIdsToSharedPreferences(context, sharedPreferences, newFavoriteIDs)
-                return@update currentState.copy(favouriteProductIDs = newFavoriteIDs)
+                return@update viewModel.uiProductFavoriteUpdater.update(
+                    selectedProductId, currentState
+                )
             }
         }
     }
@@ -135,16 +115,10 @@ class UiProductEpoxyController(
 
     private fun onAddToCartClicked(selectedProductID: Int){
         viewModel.viewModelScope.launch {
-            viewModel.store.update {
-                val currentProductIDsInCart = it.inCartProductIDs
-                val newProductIDsInCart = if (currentProductIDsInCart.contains(selectedProductID)) {
-                    currentProductIDsInCart.filter {
-                        it!=selectedProductID
-                    }.toSet()
-                } else {
-                    currentProductIDsInCart + setOf(selectedProductID)
-                }
-                return@update it.copy(inCartProductIDs = newProductIDsInCart)
+            viewModel.store.update { currentState ->
+                return@update viewModel.uiProductInCartUpdater.update(
+                    selectedProductID, currentState
+                )
             }
         }
     }

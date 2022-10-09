@@ -1,9 +1,11 @@
 package ru.kpfu.itis.gnt.fakestore.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import coil.load
 import fakestore.R
@@ -25,9 +27,15 @@ class ProductInformationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProductInformationBinding.inflate(inflater, container, false)
-        initViews()
+
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initViews()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
 
     private fun initViews() {
         uiProduct = arguments?.getSerializable(ARG_TEXT) as UiProduct
