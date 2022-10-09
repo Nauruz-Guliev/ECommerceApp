@@ -113,6 +113,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_product" />
 
+            <RatingBar
+                android:layout_marginHorizontal="16dp"
+                android:id="@+id/rating_bar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:stepSize="0.1"
+                android:secondaryProgressTint="@color/purple"
+                android:progressTint="@color/purple"
+                android:isIndicator="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/tv_product_price"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_title" />
             <TextView
                 android:id="@+id/tv_product_price"
                 android:layout_width="wrap_content"

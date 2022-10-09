@@ -9,5 +9,6 @@ class Product(
     val id: Int,
     val image: String,
     val price: BigDecimal,
-    val title: String
+    val title: String,
+    val rating: ru.kpfu.itis.gnt.fakestore.model.network.Rating
 ) : Serializable

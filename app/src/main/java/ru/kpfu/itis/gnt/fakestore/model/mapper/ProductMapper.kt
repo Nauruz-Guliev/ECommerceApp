@@ -18,6 +18,7 @@ class ProductMapper
             image = networkProduct.image,
             price = BigDecimal(networkProduct.price).setScale(2, RoundingMode.HALF_UP),
             title = networkProduct.title,
+            rating = networkProduct.rating
         )
     }
     private fun capitalize(text: String) :String{

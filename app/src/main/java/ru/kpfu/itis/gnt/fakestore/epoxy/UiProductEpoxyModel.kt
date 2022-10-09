@@ -2,6 +2,7 @@ package ru.kpfu.itis.gnt.fakestore.epoxy
 
 import android.content.Context
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -37,7 +38,7 @@ data class UiProductEpoxyModel(
             tvProductCategory.text = uiProduct.product.category
             // to show products in dollars instead of rubels
             currencyFormatter.currency = Currency.getInstance("USD")
-
+            ratingBar.rating = uiProduct.product.rating.rate.toFloat()
             tvProductPrice.text = currencyFormatter.format(uiProduct.product.price)
 
             val imageRes = if (uiProduct.isFavorite){
