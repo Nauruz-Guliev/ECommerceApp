@@ -90,14 +90,11 @@ class MainActivity : AppCompatActivity() {
         products: List<Product>
     ): Float {
         var totalCost = 0f
-        Log.e("values", quantityMap.size.toString() + " " + products.size.toString())
-
         products.forEach { product ->
             inCartProductIDs.forEach { inCartProductID ->
                 if (product.id == inCartProductID) {
                     totalCost = totalCost.plus(product.price.toFloat()).round(2)
                 }
-                Log.d("quantity", quantityMap.size.toString())
                 if (quantityMap.size != 0) {
                     quantityMap.forEach { productID, quantity ->
                         if(product.id == productID) {
