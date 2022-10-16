@@ -22,7 +22,9 @@ class UiProductEpoxyController(
     private val navController: NavController,
 
     ) : TypedEpoxyController<ProductsListFragmentUiState>() {
+    var isSearching = false
     override fun buildModels(data: ProductsListFragmentUiState?) {
+
 
         when (data) {
             is ProductsListFragmentUiState.Success -> {
@@ -44,7 +46,8 @@ class UiProductEpoxyController(
                         navController = navController,
                         ::onFavouriteIconClicked,
                         ::onProductClicked,
-                        ::onAddToCartClicked
+                        ::onAddToCartClicked,
+                        true
 
                     ).id(it.product.id).addTo(this)
                 }
@@ -58,13 +61,17 @@ class UiProductEpoxyController(
                         navController = navController,
                         ::onFavouriteIconClicked,
                         ::onProductClicked,
-                        ::onAddToCartClicked
+                        ::onAddToCartClicked,
+                        isSearching
 
                     ).id(epoxyId).addTo(this)
                 }
             }
             else -> {}
         }
+    }
+    fun setSearchingOn(isSearching:Boolean) {
+        this.isSearching = isSearching
     }
 
 

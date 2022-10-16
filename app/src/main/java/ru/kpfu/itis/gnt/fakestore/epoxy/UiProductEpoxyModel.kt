@@ -22,7 +22,8 @@ data class UiProductEpoxyModel(
     val navController: NavController,
     val onFavouriteIconClicked: (Int) -> Unit,
     val onProductClicked: (NavController, UiProduct, Fragment) -> Unit,
-    val onAddToCartClicked: (Int) -> Unit
+    val onAddToCartClicked: (Int) -> Unit,
+    val isSearching: Boolean
 ) : ViewBindingKotlinModel<EpoxyProductItemBinding>(R.layout.epoxy_product_item) {
 
     private val currencyFormatter = NumberFormat.getCurrencyInstance()
@@ -30,7 +31,9 @@ data class UiProductEpoxyModel(
     override fun EpoxyProductItemBinding.bind() {
         shimmerIncluder.shimmerLayout.isVisible = uiProduct == null
         cardView.isInvisible = uiProduct == null
-
+        if (isSearching) {
+            shimmerIncluder.shimmerLayout.isVisible = false
+        }
         uiProduct?.let {
             shimmerIncluder.shimmerLayout.stopShimmer()
 

@@ -8,6 +8,18 @@
     android:background="@color/green_100"
     >
 
+    <TextView
+        android:textSize="18sp"
+        tools:text="Product was not found"
+        android:visibility="invisible"
+        android:id="@+id/tv_search_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/rv_repoxy"
         android:layout_width="match_parent"
@@ -17,7 +29,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
+        tools:visibility="invisible"
         tools:itemCount="10"
         tools:listitem="@layout/epoxy_product_item" />
 

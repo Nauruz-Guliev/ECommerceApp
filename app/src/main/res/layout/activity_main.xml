@@ -50,9 +50,13 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <androidx.appcompat.widget.SearchView
+            android:layout_marginBottom="4dp"
+            app:iconifiedByDefault="false"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/search_bar_layout"
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="48dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.fragment.app.FragmentContainerView

@@ -64,6 +64,7 @@ class ProductsListFragment : Fragment() {
             uiStateGenerator.generate(uiProducts, productFilterInfo)
         }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner)
         {
+            controller.setSearchingOn(false)
             controller.setData(it)
         }
         viewModel.refreshProducts()
@@ -78,9 +79,23 @@ class ProductsListFragment : Fragment() {
                     viewModel.uiProductListReducer.reduce(viewModel.store).map { uiProducts ->
                         val filteredUiProducts: MutableList<UiProduct> = mutableListOf()
                         uiProducts.forEach { product ->
-                            if (product.product.title.contains(query.toString())) filteredUiProducts.add(
-                                product
-                            )
+                            if (product.product.title.contains(query.toString())) {
+                                filteredUiProducts.add(
+                                    product
+                                )
+                            }
+                        }
+                        with (binding) {
+                            if (filteredUiProducts.size == 0) {
+                                tvSearchError.apply {
+                                    text = "${query} was not found."
+                                    visibility = ViewGroup.VISIBLE
+                                    rvRepoxy.visibility = ViewGroup.INVISIBLE
+                                }
+                            } else {
+                                rvRepoxy.visibility = ViewGroup.VISIBLE
+                                tvSearchError.visibility = ViewGroup.INVISIBLE
+                            }
                         }
                         return@map filteredUiProducts
                     },
@@ -89,6 +104,7 @@ class ProductsListFragment : Fragment() {
                     uiStateGenerator.generate(uiProducts, productFilterInfo)
                 }
                     .distinctUntilChanged().asLiveData().observe(viewLifecycleOwner) {
+                        controller.setSearchingOn(true)
                         controller.setData(it)
                     }
                 return true;
@@ -106,6 +122,5 @@ class ProductsListFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 
 }
