@@ -1,6 +1,7 @@
 package ru.kpfu.itis.gnt.fakestore.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import fakestore.R
@@ -62,7 +62,7 @@ class ProductsListFragment : Fragment() {
             viewModel.store.stateFlow.map { it.productFilterInfo }
         ) { uiProducts, productFilterInfo ->
             uiStateGenerator.generate(uiProducts, productFilterInfo)
-        }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner)
+        }.distinctUntilChanged().asLiveData().observe(requireActivity())
         {
             controller.setSearchingOn(false)
             controller.setData(it)
@@ -75,11 +75,16 @@ class ProductsListFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 bottomNavigationView.selectedItemId = R.id.productsListFragment
+                return true;
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                bottomNavigationView.selectedItemId = R.id.productsListFragment
                 combine(
                     viewModel.uiProductListReducer.reduce(viewModel.store).map { uiProducts ->
                         val filteredUiProducts: MutableList<UiProduct> = mutableListOf()
                         uiProducts.forEach { product ->
-                            if (product.product.title.contains(query.toString())) {
+                            if (product.product.title.toLowerCase().contains(newText.toString().toLowerCase())) {
                                 filteredUiProducts.add(
                                     product
                                 )
@@ -88,7 +93,7 @@ class ProductsListFragment : Fragment() {
                         with (binding) {
                             if (filteredUiProducts.size == 0) {
                                 tvSearchError.apply {
-                                    text = "${query} was not found."
+                                    text = "${newText} was not found."
                                     visibility = ViewGroup.VISIBLE
                                     rvRepoxy.visibility = ViewGroup.INVISIBLE
                                 }
@@ -97,20 +102,21 @@ class ProductsListFragment : Fragment() {
                                 tvSearchError.visibility = ViewGroup.INVISIBLE
                             }
                         }
-                        return@map filteredUiProducts
+                        Log.d("text", newText.toString())
+                        if (newText != null) {
+                            return@map filteredUiProducts
+                        } else {
+                            return@map uiProducts
+                        }
                     },
                     viewModel.store.stateFlow.map { it.productFilterInfo }
                 ) { uiProducts, productFilterInfo ->
                     uiStateGenerator.generate(uiProducts, productFilterInfo)
                 }
-                    .distinctUntilChanged().asLiveData().observe(viewLifecycleOwner) {
+                    .distinctUntilChanged().asLiveData().observe(activity!!) {
                         controller.setSearchingOn(true)
                         controller.setData(it)
                     }
-                return true;
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
                 bottomNavigationView.selectedItemId = R.id.productsListFragment
                 return true
             }
