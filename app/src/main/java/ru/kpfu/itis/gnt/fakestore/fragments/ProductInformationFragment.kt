@@ -7,20 +7,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import coil.load
+import dagger.hilt.android.AndroidEntryPoint
 import fakestore.R
 import fakestore.databinding.FragmentProductInformationBinding
+import kotlinx.coroutines.launch
+import ru.kpfu.itis.gnt.fakestore.CartFragmentViewModel
+import ru.kpfu.itis.gnt.fakestore.ProductsListViewModel
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
 import java.text.NumberFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class ProductInformationFragment : Fragment() {
+
 
     private var _binding: FragmentProductInformationBinding? = null
     private val binding by lazy { _binding!! }
     private val currencyFormatter = NumberFormat.getCurrencyInstance()
     private lateinit var uiProduct: UiProduct
+
+    private val viewModel: ProductsListViewModel by viewModels ()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +59,13 @@ class ProductInformationFragment : Fragment() {
             tvProductCost.text = currencyFormatter.format(uiProduct.product.price)
             ratingBar.rating = uiProduct.product.rating.rate.toFloat()
 
+            btnAddToCart.setOnClickListener {
+                onAddToCartClicked(uiProduct.product.id)
+            }
+            ivFavorite.setOnClickListener {
+                onFavouriteIconClicked(uiProduct.product.id)
+            }
+
             val imageRes = if (uiProduct.isFavorite){
                 R.drawable.ic_baseline_favorite_24
             } else {
@@ -59,6 +77,43 @@ class ProductInformationFragment : Fragment() {
             ivProduct.load(
                 uiProduct.product.image
             )
+        }
+    }
+
+    private fun onFavouriteIconClicked(selectedProductId: Int) {
+        viewModel.viewModelScope.launch {
+            viewModel.store.update { currentState ->
+                return@update viewModel.uiProductFavoriteUpdater.update(
+                    selectedProductId, currentState
+                )
+            }
+        }
+    }
+    private fun onProductClicked(
+        navController: NavController,
+        uiProduct: UiProduct,
+        fragment: Fragment
+    ) {
+        if (fragment is ProductsListFragment) {
+            navController.navigate(
+                R.id.action_productsListFragment_to_productInformationFragment,
+                ProductInformationFragment.createBundle(uiProduct)
+            )
+        } else {
+            navController.navigate(
+                R.id.action_favoritesListFragment_to_productInformationFragment,
+                ProductInformationFragment.createBundle(uiProduct)
+            )
+        }
+    }
+
+    private fun onAddToCartClicked(selectedProductID: Int) {
+        viewModel.viewModelScope.launch {
+            viewModel.store.update { currentState ->
+                return@update viewModel.uiProductInCartUpdater.update(
+                    selectedProductID, currentState
+                )
+            }
         }
     }
 
