@@ -1,9 +1,9 @@
 package ru.kpfu.itis.gnt.fakestore
 
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
@@ -67,9 +67,7 @@ class MainActivity : AppCompatActivity() {
                 tvTotalCost.text =
                     "Total cost is ${
                         calculateTotalCost(
-                            inCartProductsIDs,
-                            quantityMap,
-                            productsList
+                            inCartProductsIDs, quantityMap, productsList
                         )
                     }"
             }
@@ -111,4 +109,5 @@ class MainActivity : AppCompatActivity() {
         val multiplier = (10).toFloat().pow(decimals)
         return (this * multiplier).roundToInt().toFloat() / multiplier
     }
+
 }
