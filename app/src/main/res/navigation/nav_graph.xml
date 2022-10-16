@@ -52,5 +52,12 @@
     <fragment
         android:id="@+id/cartFragment"
         android:name="ru.kpfu.itis.gnt.fakestore.fragments.CartFragment"
-        android:label="CartFragment" />
+        android:label="CartFragment"
+        tools:layout="@layout/cart_empty_state_model"
+
+        >
+        <action
+            android:id="@+id/action_cartFragment_to_productsListFragment"
+            app:destination="@id/productsListFragment" />
+    </fragment>
 </navigation>

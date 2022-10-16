@@ -46,7 +46,7 @@ class ProductInformationFragment : Fragment() {
             tvProductCategory.text = uiProduct.product.category
             currencyFormatter.currency = Currency.getInstance("USD")
             tvProductCost.text = currencyFormatter.format(uiProduct.product.price)
-
+            ratingBar.rating = uiProduct.product.rating.rate.toFloat()
 
             val imageRes = if (uiProduct.isFavorite){
                 R.drawable.ic_baseline_favorite_24

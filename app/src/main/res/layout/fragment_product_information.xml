@@ -17,7 +17,7 @@
             android:background="@color/white"
             app:contentScrim="@color/white"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:toolbarId="@id/toolbar">
+            app:toolbarId="@layout/custom_toolbar">
 
             <ImageView
                 android:id="@+id/iv_product"
@@ -29,12 +29,6 @@
                 app:layout_collapseMode="parallax"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -48,6 +42,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressTint="@color/purple"
+                android:secondaryProgressTint="@color/purple"
+                android:stepSize="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
 
             <TextView
                 android:textColor="@color/black"
@@ -100,7 +109,7 @@
                 app:cardBackgroundColor="@color/green_100"
                 app:cardCornerRadius="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_product_name">
+                app:layout_constraintTop_toBottomOf="@id/rating_bar">
 
                 <TextView
                     android:id="@+id/tv_product_category"
@@ -113,17 +122,18 @@
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_product_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/rating_bar" />
 
             </androidx.cardview.widget.CardView>
 
 
             <TextView
-                android:textColor="@color/black"
                 android:id="@+id/tv_product_description"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardView2"
                 tools:text="No matter the size of your online store, product descriptions play a key role in your ecommerce business.Effective product descriptions can possibly lure potential customers. Good product descriptions can potentially influence a purchase decision. Great product descriptions can ultimately help improve conversion rates and increase sales, as well as boost your visibility and SEO on paid channels.The technical details, including the use of power words and A/B tests, can be the difference between a potential buyer on your ecommerce website and those customers shopping at a competitor with similar products.Business owners, marketers and copywriters all know the importance of writing product descriptions, but what’s the best way to help reach your target audience?" />

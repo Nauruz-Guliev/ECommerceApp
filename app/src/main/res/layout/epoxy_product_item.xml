@@ -61,6 +61,8 @@
                 app:icon="@drawable/ic_baseline_favorite_border_24"
                 app:iconGravity="textEnd"
                 app:iconSize="12dp"
+                app:strokeColor="@color/black"
+                app:strokeWidth="0.5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />

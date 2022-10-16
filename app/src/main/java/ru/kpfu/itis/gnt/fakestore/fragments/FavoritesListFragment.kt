@@ -14,16 +14,20 @@ import fakestore.databinding.FragmentProductsListBinding
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import ru.kpfu.itis.gnt.fakestore.FavoritesFragmentViewModel
 import ru.kpfu.itis.gnt.fakestore.ProductsListFragmentUiState
 import ru.kpfu.itis.gnt.fakestore.ProductsListViewModel
+import ru.kpfu.itis.gnt.fakestore.epoxy.FavoriteFragmentEpoxyController
 import ru.kpfu.itis.gnt.fakestore.epoxy.UiProductEpoxyController
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiFilter
+import ru.kpfu.itis.gnt.fakestore.model.ui.UiProductInCart
+import ru.kpfu.itis.gnt.fakestore.model.ui.UiState
 
 @AndroidEntryPoint
 class FavoritesListFragment : Fragment() {
     private var _binding: FragmentProductsListBinding? = null
     private val binding by lazy { _binding!! }
-    private val viewModel: ProductsListViewModel by viewModels()
+    private val viewModel: FavoritesFragmentViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -40,47 +44,34 @@ class FavoritesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
-        val controller = UiProductEpoxyController(
+
+        val controller = FavoriteFragmentEpoxyController(
             this,
             viewModel,
             navController = navController,
         )
 
         binding.rvRepoxy.setController(controller)
-        controller.setData(ProductsListFragmentUiState.Loading)
-        combine(
-            viewModel.uiProductListReducer.reduce(viewModel.store).map {
+
+        viewModel.uiProductListReducer
+            .reduce(store = viewModel.store)
+            .map {
                 it.filter {
                     it.isFavorite
+                }.map {
+                    UiProductInCart(uiProduct = it, 1)
                 }
-            },
-            viewModel.store.stateFlow.map { it.productFilterInfo }
-        ) { uiProducts, productFilterInfo ->
-
-            if (uiProducts.isEmpty()) {
-                return@combine ProductsListFragmentUiState.Loading
             }
-
-            val uiFilters = productFilterInfo.filters.map { filter ->
-                UiFilter(
-                    filter = filter,
-                    isSelected = productFilterInfo.selectedFilter?.equals(filter) == true
-                )
-            }.toSet()
-
-            val filteredProducts = if (productFilterInfo.selectedFilter == null) {
-                uiProducts
-            } else {
-                uiProducts.filter { it.product.category == productFilterInfo.selectedFilter.value }
+            .distinctUntilChanged()
+            .asLiveData()
+            .observe(viewLifecycleOwner){
+                val viewState = if(it.isEmpty()) {
+                    UiState.Empty
+                } else {
+                    UiState.NonEmpty(it)
+                }
+                controller.setData(viewState)
             }
-
-            return@combine ProductsListFragmentUiState.Success(uiFilters, filteredProducts)
-        }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner)
-        {
-            controller.setData(it)
-        }
-        viewModel.refreshProducts()
-
     }
 
 

@@ -21,7 +21,7 @@ class UiProductEpoxyController(
     private val viewModel: ProductsListViewModel,
     private val navController: NavController,
 
-) : TypedEpoxyController<ProductsListFragmentUiState>() {
+    ) : TypedEpoxyController<ProductsListFragmentUiState>() {
     override fun buildModels(data: ProductsListFragmentUiState?) {
 
         when (data) {

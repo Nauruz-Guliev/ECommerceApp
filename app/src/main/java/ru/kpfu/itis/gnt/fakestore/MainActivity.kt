@@ -1,6 +1,7 @@
 package ru.kpfu.itis.gnt.fakestore
 
 import android.os.Bundle
+import androidx.annotation.IdRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -16,8 +17,6 @@ import fakestore.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import ru.kpfu.itis.gnt.fakestore.epoxy.UiProductEpoxyController
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
 import ru.kpfu.itis.gnt.fakestore.redux.ApplicationState
 import ru.kpfu.itis.gnt.fakestore.redux.Store
 import javax.inject.Inject
@@ -40,7 +39,6 @@ class MainActivity : AppCompatActivity() {
             topLevelDestinationIds = setOf(
                 R.id.productsListFragment,
                 R.id.profileFragment,
-                R.id.productInformationFragment,
                 R.id.favoritesListFragment,
                 R.id.cartFragment
             )
@@ -56,9 +54,13 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigationView.getOrCreateBadge(R.id.cartFragment).apply {
                 number = it
                 isVisible = it>0
+                backgroundColor = resources.getColor(R.color.purple)
             }
         }
 
+    }
+    fun navigateToShop(@IdRes destinationID: Int){
+        binding.bottomNavigationView.selectedItemId = destinationID
     }
 
 }

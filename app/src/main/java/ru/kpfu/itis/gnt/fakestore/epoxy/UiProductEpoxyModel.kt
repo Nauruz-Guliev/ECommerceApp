@@ -41,11 +41,22 @@ data class UiProductEpoxyModel(
             ratingBar.rating = uiProduct.product.rating.rate.toFloat()
             tvProductPrice.text = currencyFormatter.format(uiProduct.product.price)
 
-            val imageRes = if (uiProduct.isFavorite){
+            val imageRes = if (uiProduct.isFavorite) {
                 R.drawable.ic_baseline_favorite_24
             } else {
                 R.drawable.ic_baseline_favorite_border_24
             }
+            var imageResInCart: Int
+            var btnInCartBackgroundColor: Int
+            if (uiProduct.isInCart) {
+                imageResInCart = R.drawable.ic_baseline_check_24
+                btnInCartBackgroundColor = R.color.purple
+            } else {
+                imageResInCart = R.drawable.ic_baseline_shopping_cart_24
+                btnInCartBackgroundColor = R.color.green_500
+            }
+            btnAddToCart.setBackgroundColor(root.resources.getColor(btnInCartBackgroundColor))
+            btnAddToCart.setIconResource(imageResInCart)
             ivFavorite.setIconResource(imageRes)
 
             ivFavorite.setOnClickListener {
