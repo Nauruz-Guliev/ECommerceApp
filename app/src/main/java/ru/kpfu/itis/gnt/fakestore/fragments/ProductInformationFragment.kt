@@ -81,8 +81,8 @@ class ProductInformationFragment : Fragment() {
                 } else {
                     R.drawable.ic_baseline_favorite_border_24
                 }
-                var inCartText: String
-                var inCartDrawable: Int
+                val inCartText: String
+                val inCartDrawable: Int
                 if (uiProduct.isInCart) {
                     inCartText = resources.getString(R.string.in_cart)
                     inCartDrawable = R.drawable.in_cart_button_info_fragment_drawable

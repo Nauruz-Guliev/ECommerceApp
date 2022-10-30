@@ -22,9 +22,10 @@ class UiProductListReducer @Inject constructor() {
                 it.productFilterInfo
             },
             store.stateFlow.map {
-                it.inCartProductIDs
+                it.cartQuantityMap
             }
-        ) { listOfProducts, setOfFavoriteIds, productFilterInfo, inCartProductIDs ->
+
+        ) { listOfProducts, setOfFavoriteIds, productFilterInfo, cartQuantityMap ->
 
             if (listOfProducts.isEmpty()) {
                 return@combine emptyList<UiProduct>()
@@ -33,7 +34,7 @@ class UiProductListReducer @Inject constructor() {
                 UiProduct(
                     product = product,
                     isFavorite = setOfFavoriteIds.contains(product.id),
-                    isInCart = inCartProductIDs.contains(product.id)
+                    isInCart = cartQuantityMap.containsKey(product.id)
                 )
             }
 

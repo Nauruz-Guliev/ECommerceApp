@@ -8,4 +8,4 @@ class UiProduct(
     val product: Product,
     val isFavorite: Boolean = false,
     val isInCart: Boolean = false
-) : Serializable
+)

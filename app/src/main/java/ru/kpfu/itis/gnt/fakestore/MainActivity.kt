@@ -1,6 +1,10 @@
 package ru.kpfu.itis.gnt.fakestore
 
 import android.os.Bundle
+import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -9,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
+import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 import fakestore.R
 import fakestore.databinding.ActivityMainBinding
@@ -17,7 +22,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import ru.kpfu.itis.gnt.fakestore.model.domain.Product
 import ru.kpfu.itis.gnt.fakestore.model.states.ApplicationState
+import ru.kpfu.itis.gnt.fakestore.model.ui.UiProductInCart
 import ru.kpfu.itis.gnt.fakestore.redux.Store
+import ru.kpfu.itis.gnt.fakestore.viewModels.ProductsListViewModel
 import javax.inject.Inject
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -29,6 +36,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var store: Store<ApplicationState>
+
+    private val viewModel: ProductsListViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,30 +61,74 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
 
         combine(
-            store.stateFlow.map { it.inCartProductIDs.size },
-            store.stateFlow.map { it.inCartProductIDs },
+            viewModel.uiProductListReducer.reduce(viewModel.store),
             store.stateFlow.map { it.products },
             store.stateFlow.map { it.cartQuantityMap }
-        ) { cartSize, inCartProductsIDs, productsList, quantityMap ->
+        ) { uiProducts, productsList, quantityMap ->
             with(binding) {
                 bottomNavigationView.getOrCreateBadge(R.id.cartFragment).apply {
-                    number = cartSize
-                    isVisible = cartSize > 0
+                    number = quantityMap.size
+                    isVisible = quantityMap.size > 0
                     backgroundColor = resources.getColor(R.color.purple)
                 }
-                layoutInCart.isVisible = cartSize > 0
+                layoutInCart.isVisible = quantityMap.size > 0
                 tvTotalCost.text =
                     "Total cost is ${
                         calculateTotalCost(
-                            inCartProductsIDs, quantityMap, productsList
+                            quantityMap, productsList
                         )
                     }"
             }
+            val quantityProductList: MutableList<UiProductInCart> = mutableListOf()
+            quantityMap.forEach { (productID, amount) ->
+                Toast.makeText(baseContext, amount.toString(), Toast.LENGTH_LONG).show()
+                quantityProductList.add(
+                    UiProductInCart(
+                        uiProduct = uiProducts[productID],
+                        productsAmount = amount
+                    )
+                )
+            }
+            return@combine quantityProductList
 
+        }.map { uiProductList ->
+            uiProductList.filter { uiProduct ->
+                uiProduct.uiProduct.isInCart
+            }.sortedWith { uiProductFirst, uiProductSecond -> uiProductSecond.uiProduct.product.price.toInt() - uiProductFirst.uiProduct.product.price.toInt() }
         }.distinctUntilChanged().asLiveData().observe(this) {
-
+            showBottomInCartView(it)
         }
 
+    }
+
+    private fun showBottomInCartView(uiProductList: List<UiProductInCart>) {
+        if (uiProductList.isNotEmpty()) {
+            with(binding) {
+                val anim = AnimationUtils.loadAnimation(
+                    applicationContext,
+                    R.anim.elements_animation
+                )
+                if (ivProductFirst.visibility == ViewGroup.GONE) {
+                    ivProductFirst.visibility = ViewGroup.VISIBLE
+                    ivProductFirst.startAnimation(anim)
+                }
+                if (uiProductList.size > 1) {
+                    tvQuantityProductsInCart.visibility = ViewGroup.VISIBLE
+                    tvQuantityProductsInCart.setText(calculateTotalAmountOfItems(uiProductList))
+                } else {
+                    tvQuantityProductsInCart.visibility = ViewGroup.GONE
+                }
+                ivProductFirst.load(uiProductList[0].uiProduct.product.image)
+            }
+        }
+    }
+
+    private fun calculateTotalAmountOfItems(uiProductList: List<UiProductInCart>) : Int{
+        var amount = 0
+        uiProductList.forEach {
+            amount += it.productsAmount
+        }
+        return amount
     }
 
     fun navigateToShop(@IdRes destinationID: Int) {
@@ -82,29 +136,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calculateTotalCost(
-        inCartProductIDs: Set<Int>,
         quantityMap: Map<Int, Int>,
         products: List<Product>
     ): Float {
         var totalCost = 0f
-        products.forEach { product ->
+        products.forEach {
+                /*
+                product ->
             inCartProductIDs.forEach { inCartProductID ->
                 if (product.id == inCartProductID) {
                     totalCost = totalCost.plus(product.price.toFloat()).round(2)
                 }
-                if (quantityMap.size != 0) {
+                if (quantityMap.isNotEmpty()) {
                     quantityMap.forEach { productID, quantity ->
-                        if(product.id == productID) {
+                        if (product.id == productID) {
                             totalCost = totalCost.plus(product.price.toFloat().times(quantity))
                         }
                     }
                 }
-            }
+                }
+                 */
+
         }
         return totalCost
     }
 
-    fun Float.round(decimals: Int): Float {
+    private fun Float.round(decimals: Int): Float {
         val multiplier = (10).toFloat().pow(decimals)
         return (this * multiplier).roundToInt().toFloat() / multiplier
     }

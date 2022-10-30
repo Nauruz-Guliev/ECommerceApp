@@ -35,8 +35,11 @@ class CartFragmentEpoxyController(
                             }
                             viewModel.viewModelScope.launch {
                                 viewModel.store.update { currentState ->
-                                    val newMapEntry = uiProductInCart.uiProduct.product.id to newAmount
-                                    val newMap = currentState.cartQuantityMap + newMapEntry
+                                    val mutableMap: MutableMap<Int, Int> = mutableMapOf()
+                                    mutableMap[uiProductInCart.uiProduct.product.id] = newAmount
+                                    currentState.cartQuantityMap.putAll(mutableMap)
+                                    val newMap = currentState.cartQuantityMap
+
                                     return@update currentState.copy(cartQuantityMap = newMap)
                                 }
                             }
@@ -63,6 +66,7 @@ class CartFragmentEpoxyController(
     private fun onAddToCartClicked(selectedProductID: Int){
         viewModel.viewModelScope.launch {
             viewModel.store.update { currentState ->
+                currentState.cartQuantityMap[selectedProductID] = 1
                 return@update viewModel.uiProductInCartUpdater.update(
                     selectedProductID, currentState
                 )
