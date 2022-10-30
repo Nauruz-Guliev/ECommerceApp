@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gnt.fakestore.epoxy
+package ru.kpfu.itis.gnt.fakestore.epoxy.controllers
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
@@ -6,13 +6,12 @@ import androidx.navigation.NavController
 import com.airbnb.epoxy.TypedEpoxyController
 import fakestore.R
 import kotlinx.coroutines.launch
-import ru.kpfu.itis.gnt.fakestore.FavoritesFragmentViewModel
-import ru.kpfu.itis.gnt.fakestore.ProductsListViewModel
-import ru.kpfu.itis.gnt.fakestore.fragments.ProductInformationFragment
-import ru.kpfu.itis.gnt.fakestore.fragments.ProductsListFragment
-import ru.kpfu.itis.gnt.fakestore.model.domain.Filter
+import ru.kpfu.itis.gnt.fakestore.viewModels.FavoritesFragmentViewModel
+import ru.kpfu.itis.gnt.fakestore.epoxy.models.FavoriteFragmentEpoxyModel
+import ru.kpfu.itis.gnt.fakestore.fragments.mainFragments.ProductInformationFragment
+import ru.kpfu.itis.gnt.fakestore.fragments.mainFragments.ProductsListFragment
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiState
+import ru.kpfu.itis.gnt.fakestore.model.states.UiState
 
 class FavoriteFragmentEpoxyController(
     private val fragment: Fragment,
@@ -56,12 +55,12 @@ class FavoriteFragmentEpoxyController(
         if (fragment is ProductsListFragment) {
             navController.navigate(
                 R.id.action_productsListFragment_to_productInformationFragment,
-                ProductInformationFragment.createBundle(uiProduct)
+                ProductInformationFragment.createBundle(uiProduct.product.id)
             )
         } else {
             navController.navigate(
                 R.id.action_favoritesListFragment_to_productInformationFragment,
-                ProductInformationFragment.createBundle(uiProduct)
+                ProductInformationFragment.createBundle(uiProduct.product.id)
             )
         }
     }

@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gnt.fakestore.fragments
+package ru.kpfu.itis.gnt.fakestore.fragments.mainFragments
 
 import android.os.Bundle
 import android.util.Log
@@ -18,9 +18,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import ru.kpfu.itis.gnt.fakestore.MainActivity
-import ru.kpfu.itis.gnt.fakestore.ProductListFragmentUiStateGenerator
-import ru.kpfu.itis.gnt.fakestore.ProductsListViewModel
-import ru.kpfu.itis.gnt.fakestore.epoxy.UiProductEpoxyController
+import ru.kpfu.itis.gnt.fakestore.model.generators.ProductListFragmentUiStateGenerator
+import ru.kpfu.itis.gnt.fakestore.viewModels.ProductsListViewModel
+import ru.kpfu.itis.gnt.fakestore.epoxy.controllers.UiProductEpoxyController
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
 import javax.inject.Inject
 

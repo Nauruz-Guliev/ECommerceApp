@@ -1,6 +1,6 @@
-package ru.kpfu.itis.gnt.fakestore.redux
+package ru.kpfu.itis.gnt.fakestore.model.states
 
-import ru.kpfu.itis.gnt.fakestore.model.domain.Filter
+import ru.kpfu.itis.gnt.fakestore.model.filters.Filter
 import ru.kpfu.itis.gnt.fakestore.model.domain.Product
 
 data class ApplicationState(

@@ -1,17 +1,13 @@
-package ru.kpfu.itis.gnt.fakestore
+package ru.kpfu.itis.gnt.fakestore.epoxy.models
 
-import android.content.Context
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import fakestore.R
 import fakestore.databinding.EpoxyModelProductFilterBinding
-import ru.kpfu.itis.gnt.fakestore.epoxy.ViewBindingKotlinModel
-import ru.kpfu.itis.gnt.fakestore.model.domain.Filter
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiFilter
+import ru.kpfu.itis.gnt.fakestore.model.filters.Filter
+import ru.kpfu.itis.gnt.fakestore.model.filters.UiFilter
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
-import kotlin.reflect.KFunction1
 
 data class UiProductFilterEpoxyModel(
     val uiFilter: UiFilter,

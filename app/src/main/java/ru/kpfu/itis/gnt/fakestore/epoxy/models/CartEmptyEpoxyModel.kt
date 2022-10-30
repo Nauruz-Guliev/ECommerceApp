@@ -1,9 +1,8 @@
-package ru.kpfu.itis.gnt.fakestore.epoxy
+package ru.kpfu.itis.gnt.fakestore.epoxy.models
 
 import android.view.View
 import fakestore.R
 import fakestore.databinding.CartEmptyStateModelBinding
-import fakestore.databinding.EpoxyModelProductCartItemBinding
 
 data class CartEmptyEpoxyModel(
     private val onClick: (View) -> Unit

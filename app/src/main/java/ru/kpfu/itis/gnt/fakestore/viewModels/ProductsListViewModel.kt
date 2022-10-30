@@ -1,13 +1,14 @@
-package ru.kpfu.itis.gnt.fakestore
+package ru.kpfu.itis.gnt.fakestore.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import ru.kpfu.itis.gnt.fakestore.model.domain.Filter
+import ru.kpfu.itis.gnt.fakestore.ProductsRepository
+import ru.kpfu.itis.gnt.fakestore.model.filters.Filter
 import ru.kpfu.itis.gnt.fakestore.model.domain.Product
-import ru.kpfu.itis.gnt.fakestore.model.ui.FilterGenerator
-import ru.kpfu.itis.gnt.fakestore.redux.ApplicationState
+import ru.kpfu.itis.gnt.fakestore.model.generators.FilterGenerator
+import ru.kpfu.itis.gnt.fakestore.model.states.ApplicationState
 import ru.kpfu.itis.gnt.fakestore.redux.Store
 import ru.kpfu.itis.gnt.fakestore.redux.updater.UiProductInCartUpdater
 import ru.kpfu.itis.gnt.fakestore.redux.reducer.UiProductListReducer

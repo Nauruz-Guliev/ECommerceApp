@@ -3,7 +3,6 @@ package ru.kpfu.itis.gnt.fakestore
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
@@ -17,7 +16,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import ru.kpfu.itis.gnt.fakestore.model.domain.Product
-import ru.kpfu.itis.gnt.fakestore.redux.ApplicationState
+import ru.kpfu.itis.gnt.fakestore.model.states.ApplicationState
 import ru.kpfu.itis.gnt.fakestore.redux.Store
 import javax.inject.Inject
 import kotlin.math.pow

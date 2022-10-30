@@ -1,10 +1,10 @@
-package ru.kpfu.itis.gnt.fakestore.hilt
+package ru.kpfu.itis.gnt.fakestore.hilt.modules
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ru.kpfu.itis.gnt.fakestore.redux.ApplicationState
+import ru.kpfu.itis.gnt.fakestore.model.states.ApplicationState
 import ru.kpfu.itis.gnt.fakestore.redux.Store
 import javax.inject.Singleton
 

@@ -1,6 +1,6 @@
-package ru.kpfu.itis.gnt.fakestore.model.ui
+package ru.kpfu.itis.gnt.fakestore.model.generators
 
-import ru.kpfu.itis.gnt.fakestore.model.domain.Filter
+import ru.kpfu.itis.gnt.fakestore.model.filters.Filter
 import ru.kpfu.itis.gnt.fakestore.model.domain.Product
 import javax.inject.Inject
 

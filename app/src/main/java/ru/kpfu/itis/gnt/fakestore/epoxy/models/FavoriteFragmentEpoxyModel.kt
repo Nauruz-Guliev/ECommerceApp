@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gnt.fakestore.epoxy
+package ru.kpfu.itis.gnt.fakestore.epoxy.models
 
 import android.view.ViewGroup
 import androidx.core.view.isGone

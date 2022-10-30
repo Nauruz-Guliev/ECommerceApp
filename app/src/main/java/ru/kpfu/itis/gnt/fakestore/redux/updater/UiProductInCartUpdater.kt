@@ -1,6 +1,6 @@
 package ru.kpfu.itis.gnt.fakestore.redux.updater
 
-import ru.kpfu.itis.gnt.fakestore.redux.ApplicationState
+import ru.kpfu.itis.gnt.fakestore.model.states.ApplicationState
 import javax.inject.Inject
 
 class UiProductInCartUpdater @Inject constructor() {

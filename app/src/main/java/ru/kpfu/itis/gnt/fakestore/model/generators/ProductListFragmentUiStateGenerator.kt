@@ -1,8 +1,9 @@
-package ru.kpfu.itis.gnt.fakestore
+package ru.kpfu.itis.gnt.fakestore.model.generators
 
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiFilter
+import ru.kpfu.itis.gnt.fakestore.model.filters.UiFilter
+import ru.kpfu.itis.gnt.fakestore.model.states.ApplicationState
+import ru.kpfu.itis.gnt.fakestore.model.states.ProductsListFragmentUiState
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
-import ru.kpfu.itis.gnt.fakestore.redux.ApplicationState
 import javax.inject.Inject
 
 class ProductListFragmentUiStateGenerator @Inject constructor() {

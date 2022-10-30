@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.kpfu.itis.gnt.fakestore.fragments.ProductInformationFragment">
+    tools:context="ru.kpfu.itis.gnt.fakestore.fragments.mainFragments.ProductInformationFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
-                    android:text="product category"
+                    android:text="@string/product_category"
                     android:textAlignment="center"
                     android:textColor="#59655B"
                     android:textSize="12sp"
@@ -132,8 +132,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:layout_marginTop="12dp"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardView2"
                 tools:text="No matter the size of your online store, product descriptions play a key role in your ecommerce business.Effective product descriptions can possibly lure potential customers. Good product descriptions can potentially influence a purchase decision. Great product descriptions can ultimately help improve conversion rates and increase sales, as well as boost your visibility and SEO on paid channels.The technical details, including the use of power words and A/B tests, can be the difference between a potential buyer on your ecommerce website and those customers shopping at a competitor with similar products.Business owners, marketers and copywriters all know the importance of writing product descriptions, but what’s the best way to help reach your target audience?" />
@@ -145,51 +147,42 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:layout_gravity="bottom"
         app:layout_anchorGravity="bottom">
 
-        <androidx.cardview.widget.CardView
-
-            android:id="@+id/cardView3"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_margin="16dp"
-            android:padding="-10dp"
-            app:cardCornerRadius="40dp"
-            app:cardElevation="8dp"
-            app:cornerRadius="16dp"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_addToCart"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:background="@drawable/add_to_cart_button_info_fragment_drawable"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/add_to_cart"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_product_cost">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_addToCart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:insetLeft="0dp"
-                android:insetTop="0dp"
-                android:insetRight="0dp"
-                android:insetBottom="0dp"
-                android:text="Add to cart"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.cardview.widget.CardView>
 
         <TextView
-            android:textColor="@color/black"
             android:id="@+id/tv_product_cost"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@color/white"
+            android:padding="8dp"
+            android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_addToCart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="500$" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

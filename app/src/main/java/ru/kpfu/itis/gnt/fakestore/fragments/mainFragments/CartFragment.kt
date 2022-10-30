@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gnt.fakestore.fragments
+package ru.kpfu.itis.gnt.fakestore.fragments.mainFragments
 
 import android.graphics.Canvas
 import android.os.Bundle
@@ -18,12 +18,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ru.kpfu.itis.gnt.fakestore.CartFragmentViewModel
+import ru.kpfu.itis.gnt.fakestore.viewModels.CartFragmentViewModel
 import ru.kpfu.itis.gnt.fakestore.MainActivity
-import ru.kpfu.itis.gnt.fakestore.epoxy.CartFragmentEpoxyController
-import ru.kpfu.itis.gnt.fakestore.epoxy.CartItemEpoxyModel
+import ru.kpfu.itis.gnt.fakestore.epoxy.controllers.CartFragmentEpoxyController
+import ru.kpfu.itis.gnt.fakestore.epoxy.models.CartItemEpoxyModel
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiProductInCart
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiState
+import ru.kpfu.itis.gnt.fakestore.model.states.UiState
 import java.lang.Float.max
 
 @AndroidEntryPoint

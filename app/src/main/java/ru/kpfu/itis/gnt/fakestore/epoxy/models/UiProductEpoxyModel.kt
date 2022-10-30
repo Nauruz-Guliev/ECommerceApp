@@ -1,8 +1,5 @@
-package ru.kpfu.itis.gnt.fakestore.epoxy
+package ru.kpfu.itis.gnt.fakestore.epoxy.models
 
-import android.content.Context
-import android.view.View
-import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -49,17 +46,13 @@ data class UiProductEpoxyModel(
             } else {
                 R.drawable.ic_baseline_favorite_border_24
             }
-            var imageResInCart: Int
-            var btnInCartBackgroundColor: Int
-            if (uiProduct.isInCart) {
-                imageResInCart = R.drawable.ic_baseline_check_24
-                btnInCartBackgroundColor = R.color.purple
+
+            val inCartDrawable = if (uiProduct.isInCart) {
+                 R.drawable.in_cart_button_drawable
             } else {
-                imageResInCart = R.drawable.ic_baseline_shopping_cart_24
-                btnInCartBackgroundColor = R.color.green_500
+                 R.drawable.add_to_cart_button_drawable
             }
-            btnAddToCart.setBackgroundColor(root.resources.getColor(btnInCartBackgroundColor))
-            btnAddToCart.setIconResource(imageResInCart)
+            btnAddToCart.setBackgroundResource(inCartDrawable)
             ivFavorite.setIconResource(imageRes)
 
             ivFavorite.setOnClickListener {

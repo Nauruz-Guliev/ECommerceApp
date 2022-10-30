@@ -6,7 +6,7 @@
     app:startDestination="@id/productsListFragment">
 
     <fragment android:id="@+id/productsListFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.fragments.ProductsListFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.fragments.mainFragments.ProductsListFragment"
         android:label="Products List"
         tools:layout="@layout/fragment_products_list"
         >
@@ -19,23 +19,23 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/productsListFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
 
     </fragment>
 
     <fragment android:id="@+id/profileFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.fragments.ProfileFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.fragments.mainFragments.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile"
         />
     <fragment
         android:id="@+id/productInformationFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.fragments.ProductInformationFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.fragments.mainFragments.ProductInformationFragment"
         android:label="fragment_product_information"
         tools:layout="@layout/fragment_product_information" />
     <fragment
         android:id="@+id/favoritesListFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.fragments.FavoritesListFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.fragments.mainFragments.FavoritesListFragment"
         android:label="FavoritesListFragment"
         tools:layout="@layout/fragment_products_list"
         >
@@ -44,14 +44,15 @@
             app:destination="@id/productInformationFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="true"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/favoritesListFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.fragments.CartFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.fragments.mainFragments.CartFragment"
         android:label="CartFragment"
         tools:layout="@layout/cart_empty_state_model"
 

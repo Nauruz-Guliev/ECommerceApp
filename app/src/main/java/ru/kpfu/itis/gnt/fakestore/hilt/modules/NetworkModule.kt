@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gnt.fakestore.hilt
+package ru.kpfu.itis.gnt.fakestore.hilt.modules
 
 
 import android.os.Build

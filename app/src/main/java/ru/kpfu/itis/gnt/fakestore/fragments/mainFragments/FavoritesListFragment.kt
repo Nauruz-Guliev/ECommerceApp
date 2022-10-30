@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gnt.fakestore.fragments
+package ru.kpfu.itis.gnt.fakestore.fragments.mainFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,20 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import fakestore.databinding.FragmentProductsListBinding
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import ru.kpfu.itis.gnt.fakestore.FavoritesFragmentViewModel
-import ru.kpfu.itis.gnt.fakestore.ProductsListFragmentUiState
-import ru.kpfu.itis.gnt.fakestore.ProductsListViewModel
-import ru.kpfu.itis.gnt.fakestore.epoxy.FavoriteFragmentEpoxyController
-import ru.kpfu.itis.gnt.fakestore.epoxy.UiProductEpoxyController
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiFilter
+import ru.kpfu.itis.gnt.fakestore.viewModels.FavoritesFragmentViewModel
+import ru.kpfu.itis.gnt.fakestore.epoxy.controllers.FavoriteFragmentEpoxyController
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiProductInCart
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiState
+import ru.kpfu.itis.gnt.fakestore.model.states.UiState
 
 @AndroidEntryPoint
 class FavoritesListFragment : Fragment() {

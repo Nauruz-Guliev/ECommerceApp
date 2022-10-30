@@ -1,10 +1,12 @@
-package ru.kpfu.itis.gnt.fakestore.epoxy
+package ru.kpfu.itis.gnt.fakestore.epoxy.controllers
 
 import androidx.lifecycle.viewModelScope
 import com.airbnb.epoxy.TypedEpoxyController
 import kotlinx.coroutines.launch
-import ru.kpfu.itis.gnt.fakestore.CartFragmentViewModel
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiState
+import ru.kpfu.itis.gnt.fakestore.viewModels.CartFragmentViewModel
+import ru.kpfu.itis.gnt.fakestore.epoxy.models.CartEmptyEpoxyModel
+import ru.kpfu.itis.gnt.fakestore.epoxy.models.CartItemEpoxyModel
+import ru.kpfu.itis.gnt.fakestore.model.states.UiState
 
 class CartFragmentEpoxyController(
     private val viewModel: CartFragmentViewModel,
@@ -46,6 +48,8 @@ class CartFragmentEpoxyController(
         }
 
     }
+
+
     private fun onFavouriteIconClicked(selectedProductId: Int) {
         viewModel.viewModelScope.launch {
             viewModel.store.update { currentState ->
@@ -65,7 +69,6 @@ class CartFragmentEpoxyController(
             }
         }
     }
-
 }
 
 

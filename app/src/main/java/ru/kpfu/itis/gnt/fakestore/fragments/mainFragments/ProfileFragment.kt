@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gnt.fakestore.fragments
+package ru.kpfu.itis.gnt.fakestore.fragments.mainFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

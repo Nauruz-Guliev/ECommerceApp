@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gnt.fakestore.model.domain
+package ru.kpfu.itis.gnt.fakestore.model.filters
 
 data class Filter(
     val value: String = "",

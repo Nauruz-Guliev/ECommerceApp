@@ -1,7 +1,6 @@
-package ru.kpfu.itis.gnt.fakestore
+package ru.kpfu.itis.gnt.fakestore.model.states
 
-import ru.kpfu.itis.gnt.fakestore.fragments.ProductsListFragment
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiFilter
+import ru.kpfu.itis.gnt.fakestore.model.filters.UiFilter
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
 
 sealed interface  ProductsListFragmentUiState {

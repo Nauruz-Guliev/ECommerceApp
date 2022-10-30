@@ -1,9 +1,11 @@
-package ru.kpfu.itis.gnt.fakestore.epoxy
+package ru.kpfu.itis.gnt.fakestore.epoxy.models
 
+import android.content.Context
+import android.os.VibrationEffect
+import android.os.Vibrator
 import coil.load
 import fakestore.R
 import fakestore.databinding.EpoxyModelProductCartItemBinding
-import ru.kpfu.itis.gnt.fakestore.model.ui.UiProduct
 import ru.kpfu.itis.gnt.fakestore.model.ui.UiProductInCart
 
 
@@ -12,14 +14,16 @@ data class CartItemEpoxyModel(
     private val onFavoriteClicked: (Int) -> Unit,
     private val onDeleteClicked: (Int) -> Unit,
     private val onProductsAmountChanged: (Int) -> Unit
-): ViewBindingKotlinModel<EpoxyModelProductCartItemBinding> (R.layout.epoxy_model_product_cart_item) {
+): ViewBindingKotlinModel<EpoxyModelProductCartItemBinding>(R.layout.epoxy_model_product_cart_item) {
     override fun EpoxyModelProductCartItemBinding.bind() {
+
+        tvSwipeToDelete.translationX = 0f
 
         tvProductName.text = uiProductInCart.uiProduct.product.title
         tvProductCategory.text = uiProductInCart.uiProduct.product.category
         tvProductCost.text = uiProductInCart.uiProduct.product.price.toString()
-        var isFavoritedText: Int
-        var imageRes: Int
+        val isFavoritedText: Int
+        val imageRes: Int
         if (uiProductInCart.uiProduct.isFavorite) {
             imageRes = R.drawable.ic_baseline_favorite_24
             isFavoritedText = R.string.is_in_in_favorite
@@ -27,11 +31,19 @@ data class CartItemEpoxyModel(
             imageRes = R.drawable.ic_baseline_favorite_border_24
             isFavoritedText = R.string.add_to_favorites
         }
+
         with(selectorIncluder) {
             tvQuantity.apply {
+                val vibration = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                 tvQuantity.text = uiProductInCart.productsAmount.toString()
-                btnMinus.setOnClickListener {  onProductsAmountChanged(uiProductInCart.productsAmount-1)}
-                btnPlus.setOnClickListener {  onProductsAmountChanged(uiProductInCart.productsAmount+1)}
+                btnMinus.setOnClickListener {
+                    onProductsAmountChanged(uiProductInCart.productsAmount-1)
+                    vibration.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE))
+                }
+                btnPlus.setOnClickListener {
+                    vibration.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE))
+                    onProductsAmountChanged(uiProductInCart.productsAmount+1)
+                }
 
             }
         }
