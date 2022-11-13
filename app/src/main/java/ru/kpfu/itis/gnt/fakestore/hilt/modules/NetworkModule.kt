@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.kpfu.itis.gnt.fakestore.hilt.service.ProductsService
+import ru.kpfu.itis.gnt.fakestore.model.network.auth.AuthService
 import java.time.Duration
 import javax.inject.Singleton
 
@@ -32,6 +33,12 @@ object NetworkModule {
     @Singleton
     fun providesProductsService(retrofit: Retrofit) : ProductsService {
         return retrofit.create(ProductsService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesAuthService(retrofit: Retrofit) : AuthService {
+        return retrofit.create(AuthService::class.java)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
