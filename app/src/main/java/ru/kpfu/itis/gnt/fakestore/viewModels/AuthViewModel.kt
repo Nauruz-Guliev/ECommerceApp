@@ -1,5 +1,6 @@
 package ru.kpfu.itis.gnt.fakestore.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val store: Store<ApplicationState>,
-    private val authRepository: AuthRepository
+    val store: Store<ApplicationState>,
+    val authRepository: AuthRepository
 ) : ViewModel() {
 
     //can be called from non-suspending function
@@ -23,11 +24,12 @@ class AuthViewModel @Inject constructor(
         val response: Response<LoginResponse> = authRepository.login(userName, password)
 
         if (response.isSuccessful) {
+            val donUserResponse: Response<NetworkUser> = authRepository.fetchDon()
             store.update {
-                it.copy(user = NetworkUser())
+                it.copy(user = donUserResponse.body())
             }
         } else {
-
+            Log.d("LOGIN", response.errorBody()?.toString()?:response.message())
         }
 
     }

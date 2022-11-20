@@ -14,4 +14,8 @@ class AuthRepository @Inject constructor(
             username, password
         ))
     }
+
+    suspend fun fetchDon(): Response<NetworkUser> {
+        return authService.fetchUser(4)
+    }
 }
