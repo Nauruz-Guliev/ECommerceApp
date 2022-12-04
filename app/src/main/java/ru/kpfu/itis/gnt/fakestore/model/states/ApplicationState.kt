@@ -1,11 +1,12 @@
 package ru.kpfu.itis.gnt.fakestore.model.states
 
+import ru.kpfu.itis.gnt.fakestore.model.User
 import ru.kpfu.itis.gnt.fakestore.model.filters.Filter
 import ru.kpfu.itis.gnt.fakestore.model.domain.Product
 import ru.kpfu.itis.gnt.fakestore.model.network.NetworkUser
 
 data class ApplicationState(
-    val user: NetworkUser? = null,
+    val user: User? = null,
     val products: List<Product> = emptyList(),
     val productFilterInfo: ProductFilterInfo = ProductFilterInfo(),
     val favouriteProductIDs: Set<Int> = emptySet(),

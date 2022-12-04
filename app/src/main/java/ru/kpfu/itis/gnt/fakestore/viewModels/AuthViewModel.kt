@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import ru.kpfu.itis.gnt.fakestore.model.mapper.UserMapper
 import ru.kpfu.itis.gnt.fakestore.model.network.LoginResponse
 import ru.kpfu.itis.gnt.fakestore.model.network.NetworkUser
 import ru.kpfu.itis.gnt.fakestore.model.network.auth.AuthRepository
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     val store: Store<ApplicationState>,
-    val authRepository: AuthRepository
+    val authRepository: AuthRepository,
+    private val userMapper: UserMapper
 ) : ViewModel() {
 
     //can be called from non-suspending function
@@ -25,8 +27,10 @@ class AuthViewModel @Inject constructor(
 
         if (response.isSuccessful) {
             val donUserResponse: Response<NetworkUser> = authRepository.fetchDon()
-            store.update {
-                it.copy(user = donUserResponse.body())
+            store.update { it ->
+                it.copy(user = donUserResponse.body()?.let {
+                    userMapper.build(it)
+                })
             }
         } else {
             Log.d("LOGIN", response.errorBody()?.toString()?:response.message())
