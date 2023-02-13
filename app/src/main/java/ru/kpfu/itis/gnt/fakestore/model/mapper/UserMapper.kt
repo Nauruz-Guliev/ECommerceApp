@@ -23,7 +23,8 @@ class UserMapper @Inject constructor() {
                 street = networkUser[0].address.street,
                 zipcode = networkUser[0].address.zipcode,
                 geolocation = networkUser[0].address.geolocation
-            )
+            ),
+            email = networkUser[0].email
         )
 }
 

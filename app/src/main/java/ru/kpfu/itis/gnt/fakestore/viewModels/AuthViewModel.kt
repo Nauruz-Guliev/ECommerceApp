@@ -27,9 +27,9 @@ class AuthViewModel @Inject constructor(
 
         if (response.isSuccessful) {
             val donUserResponse: Response<NetworkUser> = authRepository.fetchDon()
-            store.update { it ->
-                it.copy(user = donUserResponse.body()?.let {
-                    userMapper.build(it)
+            store.update { state ->
+                state.copy(user = donUserResponse.body()?.let { networkUser ->
+                    userMapper.build(networkUser)
                 })
             }
         } else {

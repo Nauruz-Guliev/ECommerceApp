@@ -1,10 +1,7 @@
 package ru.kpfu.itis.gnt.fakestore.fragments.mainFragments
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -13,6 +10,8 @@ import fakestore.R
 import fakestore.databinding.FragmentProfileBinding
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import ru.kpfu.itis.gnt.fakestore.epoxy.controllers.ProfileEpoxyController
+import ru.kpfu.itis.gnt.fakestore.model.UserProfileItemGenerator
 import ru.kpfu.itis.gnt.fakestore.viewModels.AuthViewModel
 import javax.inject.Inject
 
@@ -30,7 +29,7 @@ class ProfileFragment: Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentProfileBinding.bind(view)
 
-        val uiActions = ProfileUiActions(authenticationViewModel)
+        val uiActions = ProfileActions(authenticationViewModel)
         val epoxyController = ProfileEpoxyController(profileItemGenerator, uiActions)
         binding.epoxyProfileItems.setController(epoxyController)
         authenticationViewModel.login(
@@ -39,8 +38,12 @@ class ProfileFragment: Fragment(R.layout.fragment_profile) {
         )
         authenticationViewModel.store.stateFlow.map {
             it.user
-        }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner) {
-
+        }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner) { user ->
+            epoxyController.setData(user)
+            with(binding) {
+                tvHeader.text = user?.userName
+                tvEmail.text = user?.email
+            }
         }
     }
 

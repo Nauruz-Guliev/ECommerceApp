@@ -7,6 +7,7 @@ import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.ArrayBlockingQueue
 
 class Store<T>(initialState: T) {
+
     private val _stateFlow = MutableStateFlow(initialState)
     val stateFlow:StateFlow<T> = _stateFlow
 

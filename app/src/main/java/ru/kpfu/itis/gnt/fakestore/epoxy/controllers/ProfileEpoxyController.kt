@@ -3,11 +3,14 @@ package ru.kpfu.itis.gnt.fakestore.epoxy.controllers
 import com.airbnb.epoxy.Typed2EpoxyController
 import com.airbnb.epoxy.TypedEpoxyController
 import fakestore.R
+import ru.kpfu.itis.gnt.fakestore.epoxy.models.SignOutEpoxyModel
+import ru.kpfu.itis.gnt.fakestore.epoxy.models.SignedInItemEpoxyModel
 import ru.kpfu.itis.gnt.fakestore.model.User
+import ru.kpfu.itis.gnt.fakestore.model.UserProfileItemGenerator
 
 class ProfileEpoxyController(
-    private val userProfileGenerator: UserProfileGenerator,
-    private val profileUiActions: ProfileUiActions
+    private val userProfileGenerator: UserProfileItemGenerator,
+    private val profileUiActions: ProfileUi
 ): TypedEpoxyController<User?>(){
     override fun buildModels(data: User?) {
         if(data == null) {

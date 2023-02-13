@@ -5,7 +5,6 @@ import fakestore.R
 import javax.inject.Inject
 
 class UserProfileItemGenerator @Inject constructor() {
-
     data class UserProfileItem(
         @DrawableRes val iconRes: Int,
         val headerText: String,
