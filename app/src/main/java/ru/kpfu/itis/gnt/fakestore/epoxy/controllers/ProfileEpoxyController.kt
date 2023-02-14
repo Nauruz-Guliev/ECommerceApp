@@ -1,13 +1,10 @@
 package ru.kpfu.itis.gnt.fakestore.epoxy.controllers
 
 import androidx.annotation.DrawableRes
-import com.airbnb.epoxy.Typed2EpoxyController
 import com.airbnb.epoxy.TypedEpoxyController
 import fakestore.R
 import fakestore.databinding.ProfileSignedInBinding
-import fakestore.databinding.ProfileSignedOutBinding
 import ru.kpfu.itis.gnt.fakestore.epoxy.models.SignOutEpoxyModel
-import ru.kpfu.itis.gnt.fakestore.epoxy.models.SignedInItemEpoxyModel
 import ru.kpfu.itis.gnt.fakestore.epoxy.models.ViewBindingKotlinModel
 import ru.kpfu.itis.gnt.fakestore.fragments.mainFragments.ProfileActions
 import ru.kpfu.itis.gnt.fakestore.model.User
@@ -20,10 +17,10 @@ class ProfileEpoxyController(
     override fun buildModels(data: User?) {
         if(data == null) {
             SignOutEpoxyModel(
-                {
-                    userName, password ->
+                onSignIn = { userName, password ->
                     profileUiActions.onSignIn(userName, password)
-                }
+                },
+                errorMessage = "couldn't login"
             ).id("signedout").addTo(this)
         } else {
             userProfileGenerator.buildItems(data).forEach {
@@ -32,7 +29,7 @@ class ProfileEpoxyController(
                     iconRes = profileItem.iconRes,
                     headerText = profileItem.headerText,
                     infoText = profileItem.infoText,
-                    onClick = {profileUiActions.onProfileItemClicked(profileItem.iconRes)}
+                    onClick = { profileUiActions.onProfileItemSelected(profileItem.iconRes) }
                 )
             }
 
@@ -40,43 +37,12 @@ class ProfileEpoxyController(
                 iconRes = R.drawable.ic_baseline_logout_24,
                 headerText = "Logout",
                 infoText = "LEAAAVE",
-                onClick = {profileUiActions.onProfileItemClicked(R.drawable.ic_baseline_logout_24)}
+                onClick = { profileUiActions.onProfileItemSelected(R.drawable.ic_baseline_logout_24) }
             )
 
         }
     }
-    data class SignedOutEpoxyModel(
-        val onSignIn: (String, String) -> Unit,
-        val errorMessage: String?
-    ) : ViewBindingKotlinModel<ProfileSignedOutBinding>(R.layout.profile_signed_out) {
 
-        override fun ProfileSignedOutBinding.bind() {
-            passwordLayout.error = errorMessage
-            signInButton.setOnClickListener {
-                val username = usernameEditText.text?.toString()
-                val password = passwordEditText.text?.toString()
-
-                if (username.isNullOrBlank() || password.isNullOrBlank()) {
-                    passwordLayout.error = "Both fields required"
-                    return@setOnClickListener
-                }
-
-                passwordLayout.error = null
-                onSignIn(username, password)
-            }
-        }
-
-        override fun ProfileSignedOutBinding.unbind() {
-            /*
-            usernameEditText.text = null
-            usernameEditText.clearFocus()
-            passwordEditText.text = null
-            passwordEditText.clearFocus()
-            passwordLayout.error = null
-
-             */
-        }
-    }
 
     data class SignedInItemEpoxyModel(
         @DrawableRes val iconRes: Int,

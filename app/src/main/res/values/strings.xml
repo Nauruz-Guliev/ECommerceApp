@@ -18,4 +18,6 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="product_category">product category</string>
     <string name="sign_in">SIGN IN</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>
