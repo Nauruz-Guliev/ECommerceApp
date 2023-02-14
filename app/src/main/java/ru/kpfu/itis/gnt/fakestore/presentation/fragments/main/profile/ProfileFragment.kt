@@ -19,7 +19,7 @@ class ProfileFragment: Fragment(R.layout.fragment_profile) {
     private val binding by lazy { _binding!! }
 
     @Inject
-    private lateinit var profileItemGenerator: UserProfileItemGenerator
+    lateinit var profileItemGenerator: UserProfileItemGenerator
 
     private val authenticationViewModel by viewModels<AuthViewModel>()
 

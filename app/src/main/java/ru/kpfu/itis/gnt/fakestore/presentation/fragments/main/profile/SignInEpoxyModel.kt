@@ -13,9 +13,9 @@ data class SignInEpoxyModel(
 ) : ViewBindingKotlinModel<ProfileSignedInBinding>(R.layout.profile_signed_in) {
 
     override fun ProfileSignedInBinding.bind() {
-        iconImageView.setImageResource(iconRes)
-        headerTextView.text = headerText
-        infoTextView.text = infoText
+        ivIcon.setImageResource(iconRes)
+        tvHeader.text = headerText
+        tvInfo.text = infoText
         root.setOnClickListener { onClick() }
     }
 }

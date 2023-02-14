@@ -6,7 +6,7 @@
     app:startDestination="@id/productsListFragment">
 
     <fragment android:id="@+id/productsListFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.epoxy.presentation.fragments.main.products.ProductsListFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.presentation.fragments.main.products.ProductsListFragment"
         android:label="Products List"
         tools:layout="@layout/fragment_products_list"
         >
@@ -24,18 +24,18 @@
     </fragment>
 
     <fragment android:id="@+id/profileFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.epoxy.presentation.fragments.main.profile.ProfileFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.presentation.fragments.main.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile"
         />
     <fragment
         android:id="@+id/productInformationFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.epoxy.presentation.fragments.secondary.ProductInformationFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.presentation.fragments.secondary.ProductInformationFragment"
         android:label="fragment_product_information"
         tools:layout="@layout/fragment_product_information" />
     <fragment
         android:id="@+id/favoritesListFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.epoxy.presentation.fragments.main.favorites.FavoritesListFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.presentation.fragments.main.favorites.FavoritesListFragment"
         android:label="FavoritesListFragment"
         tools:layout="@layout/fragment_products_list"
         >
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
-        android:name="ru.kpfu.itis.gnt.fakestore.epoxy.presentation.fragments.main.cart.CartFragment"
+        android:name="ru.kpfu.itis.gnt.fakestore.presentation.fragments.main.cart.CartFragment"
         android:label="CartFragment"
         tools:layout="@layout/cart_empty_state_model"
 

@@ -7,8 +7,8 @@ import com.airbnb.epoxy.CarouselModel_
 import com.airbnb.epoxy.TypedEpoxyController
 import fakestore.R
 import kotlinx.coroutines.launch
+import ru.kpfu.itis.gnt.fakestore.presentation.fragments.secondary.ProductInformationFragment
 import ru.kpfu.itis.gnt.fakestore.presentation.models.states.ProductsListFragmentUiState
-import ru.kpfu.itis.gnt.fakestore.epoxy.presentation.fragments.secondary.ProductInformationFragment
 import ru.kpfu.itis.gnt.fakestore.presentation.models.filters.Filter
 import ru.kpfu.itis.gnt.fakestore.presentation.models.ui.UiProduct
 import java.util.*

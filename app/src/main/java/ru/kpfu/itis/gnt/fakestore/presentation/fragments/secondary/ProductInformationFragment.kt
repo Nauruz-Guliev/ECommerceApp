@@ -16,7 +16,7 @@ import fakestore.databinding.FragmentProductInformationBinding
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ru.kpfu.itis.gnt.fakestore.epoxy.presentation.fragments.main.products.ProductsListViewModel
+import ru.kpfu.itis.gnt.fakestore.presentation.fragments.main.products.ProductsListViewModel
 import java.text.NumberFormat
 import java.util.*
 
