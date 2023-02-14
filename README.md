@@ -5,10 +5,10 @@
 View, search, add to cart and delete from cart any product that is available on [FakeStore API](https://fakestoreapi.com/).
 
 
-## Features
+## ✨ Features
 ...
 
-## Technologies used
+## :hammer_and_pick: Used technologies
 * Retrofit
 * Moshi
 * Kotlin coroutines
