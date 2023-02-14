@@ -7,7 +7,7 @@
 
     <application
 
-        android:name="ru.kpfu.itis.gnt.fakestore.FakeStoreApplication"
+        android:name="ru.kpfu.itis.gnt.ecommerce.FakeStoreApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,7 +18,7 @@
         android:theme="@style/Theme.FakeStore"
         tools:targetApi="31">
         <activity
-            android:name="ru.kpfu.itis.gnt.fakestore.presentation.MainActivity"
+            android:name="ru.kpfu.itis.gnt.ecommerce.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

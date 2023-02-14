@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="ru.kpfu.itis.gnt.fakestore.presentation.MainActivity">
+    tools:context="ru.kpfu.itis.gnt.ecommerce.presentation.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_in_cart"
